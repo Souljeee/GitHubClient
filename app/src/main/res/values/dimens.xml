@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="user_item_margin">8dp</dimen>
+    <dimen name="user_item_login_text_size">20sp</dimen>
+    <dimen name="user_item_layout_height">80dp</dimen>
+</resources>
