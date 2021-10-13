@@ -7,6 +7,11 @@ import moxy.MvpPresenter
 class ProfilePresenter(val userRepo: GitHubUsersRepo):MvpPresenter<ProfileView>() {
 
     fun setLogin(pos:Int){
-        viewState.setLoginText(userRepo.getUsers()[pos].login)
+        val x = userRepo
+            .getUsers()
+            .subscribe{
+                viewState.setLoginText(it[pos].login)
+            }
+
     }
 }

@@ -1,5 +1,7 @@
 package com.soulje.githubclient.model
 
+import io.reactivex.rxjava3.core.Observable
+
 class GitHubUsersRepo {
 
     private val repositories = listOf(
@@ -10,7 +12,15 @@ class GitHubUsersRepo {
         GitHubUser("Login5")
     )
 
-    fun getUsers():List<GitHubUser>{
-        return repositories
+    fun getUsers():Observable<List<GitHubUser>>{
+        return Observable.just(repositories)
     }
+
+    /*fun getUsers():Observable<List<GitHubUser>>{
+        return Observable.just(repositories)
+    }*/
+
+
+    /*val users: Observable<List<GitHubUser>>
+        get() = */
 }

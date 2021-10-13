@@ -8,7 +8,7 @@ import com.soulje.githubclient.view.UserListFragment.UserItemView
 import com.soulje.githubclient.view.UserListFragment.UsersView
 import moxy.MvpPresenter
 
-class UsersPresenter(val usersRepo: GitHubUsersRepo, val router: Router,val screen : IScreen) :
+class UsersPresenter(val usersRepo: GitHubUsersRepo, val router: Router, val screen: IScreen) :
     MvpPresenter<UsersView>() {
 
     class UsersListPresenter : IUserListPresenter {
@@ -36,9 +36,12 @@ class UsersPresenter(val usersRepo: GitHubUsersRepo, val router: Router,val scre
     }
 
     private fun loadData() {
-        val users = usersRepo.getUsers()
-        usersListPresenter.users.addAll(users)
-        viewState.updateList()
+        usersRepo
+            .getUsers()
+            .subscribe {
+                usersListPresenter.users.addAll(it)
+                viewState.updateList()
+            }
     }
 
     fun backPressed(): Boolean {
