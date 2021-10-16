@@ -1,4 +1,4 @@
-package com.soulje.githubclient.view.MainActivity
+package com.soulje.githubclient.ui.main
 
 import android.os.Bundle
 import com.github.terrakok.cicerone.androidx.AppNavigator
@@ -6,7 +6,7 @@ import com.soulje.githubclient.R
 import com.soulje.githubclient.app.App
 import com.soulje.githubclient.databinding.ActivityMainBinding
 import com.soulje.githubclient.presenter.MainPresenter
-import com.soulje.githubclient.view.screens.AndroidScreens
+import com.soulje.githubclient.ui.navigator.AndroidScreens
 import moxy.MvpAppCompatActivity
 import moxy.ktx.moxyPresenter
 

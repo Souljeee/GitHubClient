@@ -1,4 +1,4 @@
-package com.soulje.githubclient.view.UserListFragment
+package com.soulje.githubclient.ui.users
 
 import moxy.MvpView
 import moxy.viewstate.strategy.alias.AddToEndSingle

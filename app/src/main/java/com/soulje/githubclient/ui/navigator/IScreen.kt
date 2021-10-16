@@ -1,4 +1,4 @@
-package com.soulje.githubclient.view.screens
+package com.soulje.githubclient.ui.navigator
 
 import com.github.terrakok.cicerone.Screen
 

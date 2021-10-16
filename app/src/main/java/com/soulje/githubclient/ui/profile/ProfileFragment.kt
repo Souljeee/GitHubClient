@@ -1,4 +1,4 @@
-package com.soulje.githubclient.view.ProfileFrgment
+package com.soulje.githubclient.ui.profile
 
 import android.os.Bundle
 import android.view.LayoutInflater
