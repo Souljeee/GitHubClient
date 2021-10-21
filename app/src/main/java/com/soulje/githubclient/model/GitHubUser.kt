@@ -6,5 +6,6 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class GitHubUser(
-    val login : String
+    val login : String,
+    var like : Boolean
 ): Parcelable

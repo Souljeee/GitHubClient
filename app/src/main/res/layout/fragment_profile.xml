@@ -8,7 +8,14 @@
     <TextView
         android:id="@+id/login"
         android:layout_gravity="center"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+    <ImageView
+        android:id="@+id/like"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_favorite_24"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="40dp"/>
 
 </FrameLayout>

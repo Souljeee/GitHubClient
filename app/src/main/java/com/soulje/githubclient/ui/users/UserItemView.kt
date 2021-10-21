@@ -1,5 +1,8 @@
 package com.soulje.githubclient.ui.users
 
+import com.soulje.githubclient.model.GitHubUser
+
 interface UserItemView: IItemView {
-    fun setLogin(text: String)
+    fun setInfo(user:GitHubUser)
+    fun setLikes(user:GitHubUser)
 }

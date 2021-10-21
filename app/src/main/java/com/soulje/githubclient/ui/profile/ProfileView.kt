@@ -8,4 +8,6 @@ interface ProfileView: MvpView {
     fun initLogin(pos:Int)
     @AddToEndSingle
     fun setLoginText(tex:String)
+    @AddToEndSingle
+    fun initLike()
 }
