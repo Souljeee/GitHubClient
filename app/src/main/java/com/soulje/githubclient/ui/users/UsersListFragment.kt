@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.soulje.githubclient.app.App
+import com.soulje.githubclient.databinding.FragmentProfileBinding
 import com.soulje.githubclient.databinding.FragmentUsersListBinding
 import com.soulje.githubclient.model.GitHubUsersRepo
 import com.soulje.githubclient.presenter.UsersPresenter
@@ -19,11 +20,12 @@ class UsersListFragment : MvpAppCompatFragment(), UsersView, BackButtonListener 
     private val presenter: UsersPresenter by moxyPresenter { UsersPresenter(GitHubUsersRepo(), App.instance.router, AndroidScreens()) }
     private lateinit var adapter: UsersAdapter
 
-    private lateinit var binding: FragmentUsersListBinding
+    private var _binding: FragmentUsersListBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) : View {
 
-        binding = FragmentUsersListBinding.inflate(inflater,container,false)
+        _binding = FragmentUsersListBinding.inflate(inflater,container,false)
         return binding.root
     }
 
@@ -38,6 +40,11 @@ class UsersListFragment : MvpAppCompatFragment(), UsersView, BackButtonListener 
     }
 
     override fun backPressed() = presenter.backPressed()
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
 
     companion object {

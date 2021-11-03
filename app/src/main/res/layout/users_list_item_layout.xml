@@ -12,15 +12,7 @@
         android:layout_margin="@dimen/user_item_margin"
         android:textSize="@dimen/user_item_login_text_size"
         android:textColor="@color/black"/>
-    <ImageView
-        android:id="@+id/like"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_baseline_favorite_24"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/like_counter"/>
+
 
 
 

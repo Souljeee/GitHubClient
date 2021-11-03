@@ -1,31 +1,35 @@
 package com.soulje.githubclient.ui.profile
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.soulje.githubclient.LikeEvent
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.soulje.githubclient.R
 import com.soulje.githubclient.app.App
 import com.soulje.githubclient.databinding.FragmentProfileBinding
 import com.soulje.githubclient.model.GitHubUsersRepo
+import com.soulje.githubclient.model.UserRepository
 import com.soulje.githubclient.presenter.ProfilePresenter
+import com.soulje.githubclient.ui.navigator.AndroidScreens
+import com.soulje.githubclient.ui.users.UsersAdapter
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
 
 class ProfileFragment : MvpAppCompatFragment(), ProfileView {
 
-    private lateinit var binding : FragmentProfileBinding
-    private val presenter: ProfilePresenter by moxyPresenter { ProfilePresenter(GitHubUsersRepo()) }
-    private var pos: Int = -1
+    private var _binding: FragmentProfileBinding? = null
+    private val binding get() = _binding!!
+    private val presenter: ProfilePresenter by moxyPresenter { ProfilePresenter(GitHubUsersRepo(),App.instance.router, AndroidScreens()) }
+    private lateinit var userLogin:String
+    private lateinit var adapter: ProfileAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentProfileBinding.inflate(inflater,container,false)
+        _binding = FragmentProfileBinding.inflate(inflater,container,false)
         return binding.root
     }
 
@@ -33,39 +37,34 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
         super.onViewCreated(view, savedInstanceState)
         val bundle = this.arguments
         bundle?.let {
-            pos = it.getInt("key")
+            userLogin = it.getString("key")!!
         }
-        initLogin(pos)
-        initLike()
+        init(userLogin)
     }
 
-    override fun initLogin(pos:Int) = with(binding) {
-        if(pos != -1){
-            presenter.setInfo(pos)
-        }
+    override fun init(userLogin: String) = with(binding) {
+        presenter.loadData(userLogin)
     }
 
-    override fun setLoginText(tex: String) = with(binding){
-        login.text = tex
+    override fun setRecyclerViewData(reposData: List<UserRepository>) = with(binding){
+        repostoriesList.layoutManager = LinearLayoutManager(context)
+        adapter = ProfileAdapter(presenter)
+        adapter.setData(reposData)
+        repostoriesList.adapter = adapter
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 
-    override fun initLike() = with(binding) {
-        var isPressed = false
-        like.setOnClickListener {
-            if(!isPressed){
-                isPressed = true
-                App.instance.likeBus.post(LikeEvent(pos))
-                like.setImageResource(R.drawable.ic_baseline_favorite_red_24)
-            }
-        }
-    }
 
     companion object {
-        fun newInstance(pos:Int) : ProfileFragment {
+        fun newInstance(userLogin:String) : ProfileFragment {
             val f: ProfileFragment = ProfileFragment()
             val bundle = Bundle()
-            bundle.putInt("key",pos)
+            bundle.putString("key",userLogin)
             f.arguments = bundle
             return f
         }
