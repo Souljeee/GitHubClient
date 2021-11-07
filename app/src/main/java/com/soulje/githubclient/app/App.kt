@@ -5,14 +5,24 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import com.github.terrakok.cicerone.Cicerone
 import com.github.terrakok.cicerone.Router
-import com.soulje.githubclient.EventBus
+import com.soulje.githubclient.model.GitHubApi
+import retrofit2.Retrofit
+import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 
 class App : Application() {
+
+
+    val retrofit  = Retrofit.Builder()
+        .baseUrl("https://api.github.com/")
+        .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+    val api = retrofit.create(GitHubApi::class.java)
 
     private val cicerone: Cicerone<Router> by lazy {
         Cicerone.create()
     }
-    val likeBus = EventBus()
     val navigatorHolder get() = cicerone.getNavigatorHolder()
     val router get() = cicerone.router
     override fun onCreate() {

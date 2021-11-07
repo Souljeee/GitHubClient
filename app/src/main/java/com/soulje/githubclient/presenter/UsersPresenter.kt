@@ -26,7 +26,6 @@ class UsersPresenter(val usersRepo: GitHubUsersRepo, val router: Router, val scr
         override fun bindView(view: UserItemView) {
             val user = users[view.pos]
             view.setInfo(user)
-            view.setLikes(user)
         }
     }
 
@@ -38,7 +37,7 @@ class UsersPresenter(val usersRepo: GitHubUsersRepo, val router: Router, val scr
         loadData()
 
         usersListPresenter.itemClickListener = { itemView ->
-            router.navigateTo(screen.profile(itemView.pos))
+            router.navigateTo(screen.profile(itemView.userLogin!!))
         }
     }
 
@@ -46,11 +45,13 @@ class UsersPresenter(val usersRepo: GitHubUsersRepo, val router: Router, val scr
         disposable = usersRepo
             .getUsers()
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { s ->
-                usersListPresenter.users.addAll(s)
+            .subscribe ({ repos ->
+                usersListPresenter.users.clear()
+                usersListPresenter.users.addAll(repos)
                 viewState.updateList()
-            }
-
+            }, {
+                Log.d("tag","Error: ${it.message}")
+            })
     }
 
     fun backPressed(): Boolean {
