@@ -5,11 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.soulje.githubclient.Network.AndroidNetworkStatus
 import com.soulje.githubclient.R
 import com.soulje.githubclient.app.App
 import com.soulje.githubclient.databinding.FragmentProfileBinding
-import com.soulje.githubclient.model.GitHubUsersRepo
-import com.soulje.githubclient.model.UserRepository
+import com.soulje.githubclient.model.*
+import com.soulje.githubclient.model.db.Database
 import com.soulje.githubclient.presenter.ProfilePresenter
 import com.soulje.githubclient.ui.navigator.AndroidScreens
 import com.soulje.githubclient.ui.users.UsersAdapter
@@ -21,7 +22,8 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
-    private val presenter: ProfilePresenter by moxyPresenter { ProfilePresenter(GitHubUsersRepo(),App.instance.router, AndroidScreens()) }
+    private val presenter: ProfilePresenter by moxyPresenter { ProfilePresenter(RetrofitRepo(GitHubUsersRepo(),AndroidNetworkStatus(requireContext()),
+        Database.getInstance(), RoomGithubUsersCache(), RoomGithubRepositoriesCache()),App.instance.router, AndroidScreens()) }
     private lateinit var userLogin:String
     private lateinit var adapter: ProfileAdapter
 

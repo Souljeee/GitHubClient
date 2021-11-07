@@ -2,6 +2,7 @@ package com.soulje.githubclient.presenter
 
 import com.github.terrakok.cicerone.Router
 import com.soulje.githubclient.model.GitHubUsersRepo
+import com.soulje.githubclient.model.RetrofitRepo
 import com.soulje.githubclient.ui.navigator.IScreen
 import com.soulje.githubclient.ui.profile.ProfileView
 import com.soulje.githubclient.ui.profile.RepositoryItemView
@@ -10,7 +11,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.Disposable
 import moxy.MvpPresenter
 
-class ProfilePresenter(val userRepo: GitHubUsersRepo, val router: Router, val screen: IScreen):MvpPresenter<ProfileView>() {
+class ProfilePresenter(val userRepo: RetrofitRepo, val router: Router, val screen: IScreen):MvpPresenter<ProfileView>() {
 
     var itemClickListener: ((RepositoryItemView) -> Unit)? = null
 

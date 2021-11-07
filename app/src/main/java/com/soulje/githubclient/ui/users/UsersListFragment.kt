@@ -5,10 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.soulje.githubclient.Network.AndroidNetworkStatus
 import com.soulje.githubclient.app.App
 import com.soulje.githubclient.databinding.FragmentProfileBinding
 import com.soulje.githubclient.databinding.FragmentUsersListBinding
 import com.soulje.githubclient.model.GitHubUsersRepo
+import com.soulje.githubclient.model.RetrofitRepo
+import com.soulje.githubclient.model.RoomGithubRepositoriesCache
+import com.soulje.githubclient.model.RoomGithubUsersCache
+import com.soulje.githubclient.model.db.Database
 import com.soulje.githubclient.presenter.UsersPresenter
 import com.soulje.githubclient.ui.navigator.BackButtonListener
 import com.soulje.githubclient.ui.navigator.AndroidScreens
@@ -17,7 +22,9 @@ import moxy.ktx.moxyPresenter
 
 class UsersListFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
 
-    private val presenter: UsersPresenter by moxyPresenter { UsersPresenter(GitHubUsersRepo(), App.instance.router, AndroidScreens()) }
+    private val presenter: UsersPresenter by moxyPresenter { UsersPresenter(
+        RetrofitRepo(GitHubUsersRepo(), AndroidNetworkStatus(requireContext()),
+        Database.getInstance(),RoomGithubUsersCache(), RoomGithubRepositoriesCache()), App.instance.router, AndroidScreens()) }
     private lateinit var adapter: UsersAdapter
 
     private var _binding: FragmentUsersListBinding? = null

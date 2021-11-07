@@ -4,6 +4,8 @@ import android.util.Log
 import com.github.terrakok.cicerone.Router
 import com.soulje.githubclient.model.GitHubUser
 import com.soulje.githubclient.model.GitHubUsersRepo
+import com.soulje.githubclient.model.IGitHubUsersRepo
+import com.soulje.githubclient.model.RetrofitRepo
 import com.soulje.githubclient.ui.navigator.IScreen
 import com.soulje.githubclient.ui.users.UserItemView
 import com.soulje.githubclient.ui.users.UsersView
@@ -12,7 +14,7 @@ import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.disposables.Disposable
 import moxy.MvpPresenter
 
-class UsersPresenter(val usersRepo: GitHubUsersRepo, val router: Router, val screen: IScreen) :
+class UsersPresenter(val usersRepo: IGitHubUsersRepo, val router: Router, val screen: IScreen) :
     MvpPresenter<UsersView>() {
 
     private var disposable:Disposable? = null
