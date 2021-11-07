@@ -1,8 +1,8 @@
 package com.soulje.githubclient.presenter
 
 import com.github.terrakok.cicerone.Router
-import com.soulje.githubclient.view.screens.IScreen
-import com.soulje.githubclient.view.MainActivity.MainView
+import com.soulje.githubclient.ui.navigator.IScreen
+import com.soulje.githubclient.ui.main.MainView
 import moxy.MvpPresenter
 
 class MainPresenter(val router: Router, val screens: IScreen) : MvpPresenter<MainView>() {

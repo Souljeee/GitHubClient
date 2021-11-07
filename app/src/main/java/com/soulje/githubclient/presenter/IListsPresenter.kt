@@ -1,7 +1,7 @@
 package com.soulje.githubclient.presenter
 
-import com.soulje.githubclient.view.UserListFragment.IItemView
-import com.soulje.githubclient.view.UserListFragment.UserItemView
+import com.soulje.githubclient.ui.users.IItemView
+import com.soulje.githubclient.ui.users.UserItemView
 
 interface IListPresenter<V: IItemView> {
     var itemClickListener: ((V) -> Unit)?

@@ -1,4 +1,4 @@
-package com.soulje.githubclient.view.UserListFragment
+package com.soulje.githubclient.ui.users
 
 interface UserItemView: IItemView {
     fun setLogin(text: String)

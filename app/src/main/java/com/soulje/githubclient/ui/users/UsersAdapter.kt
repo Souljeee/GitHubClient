@@ -1,4 +1,4 @@
-package com.soulje.githubclient.view.UserListFragment
+package com.soulje.githubclient.ui.users
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

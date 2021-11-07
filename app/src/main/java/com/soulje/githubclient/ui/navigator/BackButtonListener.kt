@@ -1,4 +1,4 @@
-package com.soulje.githubclient.view
+package com.soulje.githubclient.ui.navigator
 
 interface BackButtonListener {
     fun backPressed(): Boolean

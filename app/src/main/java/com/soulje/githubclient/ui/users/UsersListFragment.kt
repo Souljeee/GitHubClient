@@ -1,4 +1,4 @@
-package com.soulje.githubclient.view.UserListFragment
+package com.soulje.githubclient.ui.users
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,8 +9,8 @@ import com.soulje.githubclient.app.App
 import com.soulje.githubclient.databinding.FragmentUsersListBinding
 import com.soulje.githubclient.model.GitHubUsersRepo
 import com.soulje.githubclient.presenter.UsersPresenter
-import com.soulje.githubclient.view.BackButtonListener
-import com.soulje.githubclient.view.screens.AndroidScreens
+import com.soulje.githubclient.ui.navigator.BackButtonListener
+import com.soulje.githubclient.ui.navigator.AndroidScreens
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
