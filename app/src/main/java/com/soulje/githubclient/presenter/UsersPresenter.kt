@@ -1,11 +1,14 @@
 package com.soulje.githubclient.presenter
 
+import android.util.Log
 import com.github.terrakok.cicerone.Router
 import com.soulje.githubclient.model.GitHubUser
 import com.soulje.githubclient.model.GitHubUsersRepo
 import com.soulje.githubclient.ui.navigator.IScreen
 import com.soulje.githubclient.ui.users.UserItemView
 import com.soulje.githubclient.ui.users.UsersView
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.disposables.Disposable
 import moxy.MvpPresenter
 
@@ -22,7 +25,8 @@ class UsersPresenter(val usersRepo: GitHubUsersRepo, val router: Router, val scr
 
         override fun bindView(view: UserItemView) {
             val user = users[view.pos]
-            view.setLogin(user.login)
+            view.setInfo(user)
+            view.setLikes(user)
         }
     }
 
@@ -41,10 +45,12 @@ class UsersPresenter(val usersRepo: GitHubUsersRepo, val router: Router, val scr
     private fun loadData() {
         disposable = usersRepo
             .getUsers()
-            .subscribe {
-                usersListPresenter.users.addAll(it)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { s ->
+                usersListPresenter.users.addAll(s)
                 viewState.updateList()
             }
+
     }
 
     fun backPressed(): Boolean {
