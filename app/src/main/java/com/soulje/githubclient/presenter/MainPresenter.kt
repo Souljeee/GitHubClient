@@ -1,5 +1,6 @@
 package com.soulje.githubclient.presenter
 
+import android.util.Log
 import com.github.terrakok.cicerone.Router
 import com.soulje.githubclient.ui.navigator.IScreen
 import com.soulje.githubclient.ui.main.MainView

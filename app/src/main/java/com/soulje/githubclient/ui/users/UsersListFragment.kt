@@ -1,30 +1,44 @@
 package com.soulje.githubclient.ui.users
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.github.terrakok.cicerone.Router
 import com.soulje.githubclient.Network.AndroidNetworkStatus
+import com.soulje.githubclient.Network.INetworkStatus
 import com.soulje.githubclient.app.App
 import com.soulje.githubclient.databinding.FragmentProfileBinding
 import com.soulje.githubclient.databinding.FragmentUsersListBinding
-import com.soulje.githubclient.model.GitHubUsersRepo
-import com.soulje.githubclient.model.RetrofitRepo
-import com.soulje.githubclient.model.RoomGithubRepositoriesCache
-import com.soulje.githubclient.model.RoomGithubUsersCache
+import com.soulje.githubclient.model.*
 import com.soulje.githubclient.model.db.Database
+import com.soulje.githubclient.model.db.RepositoryDao
+import com.soulje.githubclient.model.db.UserDao
 import com.soulje.githubclient.presenter.UsersPresenter
 import com.soulje.githubclient.ui.navigator.BackButtonListener
 import com.soulje.githubclient.ui.navigator.AndroidScreens
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
+import org.koin.android.ext.android.inject
+import org.koin.core.qualifier.named
 
 class UsersListFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
 
-    private val presenter: UsersPresenter by moxyPresenter { UsersPresenter(
-        RetrofitRepo(GitHubUsersRepo(), AndroidNetworkStatus(requireContext()),
-        Database.getInstance(),RoomGithubUsersCache(), RoomGithubRepositoriesCache()), App.instance.router, AndroidScreens()) }
+    private val router: Router by inject()
+    private val retrofitRepo: IGitHubUsersRepo by inject(named("cache"))
+
+
+    private val presenter: UsersPresenter by moxyPresenter {
+        UsersPresenter(
+            retrofitRepo,
+            router,
+            AndroidScreens()
+        )
+    }
+
+
     private lateinit var adapter: UsersAdapter
 
     private var _binding: FragmentUsersListBinding? = null

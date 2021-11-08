@@ -5,25 +5,34 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.github.terrakok.cicerone.Router
 import com.soulje.githubclient.Network.AndroidNetworkStatus
+import com.soulje.githubclient.Network.INetworkStatus
 import com.soulje.githubclient.R
 import com.soulje.githubclient.app.App
 import com.soulje.githubclient.databinding.FragmentProfileBinding
 import com.soulje.githubclient.model.*
 import com.soulje.githubclient.model.db.Database
+import com.soulje.githubclient.model.db.RepositoryDao
+import com.soulje.githubclient.model.db.UserDao
 import com.soulje.githubclient.presenter.ProfilePresenter
 import com.soulje.githubclient.ui.navigator.AndroidScreens
 import com.soulje.githubclient.ui.users.UsersAdapter
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
+import org.koin.android.ext.android.inject
+import org.koin.core.qualifier.named
 
 
 class ProfileFragment : MvpAppCompatFragment(), ProfileView {
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
-    private val presenter: ProfilePresenter by moxyPresenter { ProfilePresenter(RetrofitRepo(GitHubUsersRepo(),AndroidNetworkStatus(requireContext()),
-        Database.getInstance(), RoomGithubUsersCache(), RoomGithubRepositoriesCache()),App.instance.router, AndroidScreens()) }
+    private val router : Router by inject()
+
+    private val retrofitRepo: IGitHubUsersRepo by inject(named("cache"))
+
+    private val presenter: ProfilePresenter by moxyPresenter { ProfilePresenter( retrofitRepo, router, AndroidScreens()) }
     private lateinit var userLogin:String
     private lateinit var adapter: ProfileAdapter
 

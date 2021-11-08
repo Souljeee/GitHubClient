@@ -7,9 +7,12 @@ import io.reactivex.rxjava3.core.Observable.interval
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
+import org.koin.java.KoinJavaComponent.inject
 import java.util.concurrent.TimeUnit
 
 class GitHubUsersRepo:IGitHubUsersRepo {
+
+    private val api: GitHubApi by inject(GitHubApi::class.java)
 
     private val repositories = listOf(
         GitHubUser("Login1"),
@@ -20,10 +23,10 @@ class GitHubUsersRepo:IGitHubUsersRepo {
     )
 
     override fun getUsers():Single<List<GitHubUser>>{
-        return  App.instance.api.getUsersFromServer().subscribeOn(Schedulers.io())
+        return  api.getUsersFromServer().subscribeOn(Schedulers.io())
     }
 
     override fun getRepos(userLogin : String): Single<List<UserRepository>> {
-        return App.instance.api.getUserReposFromServer(userLogin).subscribeOn((Schedulers.io()))
+        return api.getUserReposFromServer(userLogin).subscribeOn((Schedulers.io()))
     }
 }
