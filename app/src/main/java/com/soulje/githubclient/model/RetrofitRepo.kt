@@ -1,5 +1,6 @@
 package com.soulje.githubclient.model
 
+import android.util.Log
 import com.soulje.githubclient.Network.INetworkStatus
 import com.soulje.githubclient.model.db.*
 import io.reactivex.rxjava3.core.Single

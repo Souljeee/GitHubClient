@@ -10,17 +10,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import org.koin.java.KoinJavaComponent.inject
 import java.util.concurrent.TimeUnit
 
-class GitHubUsersRepo:IGitHubUsersRepo {
-
-    private val api: GitHubApi by inject(GitHubApi::class.java)
-
-    private val repositories = listOf(
-        GitHubUser("Login1"),
-        GitHubUser("Login2"),
-        GitHubUser("Login3"),
-        GitHubUser("Login4"),
-        GitHubUser("Login5")
-    )
+class GitHubUsersRepo(private val api : GitHubApi):IGitHubUsersRepo {
 
     override fun getUsers():Single<List<GitHubUser>>{
         return  api.getUsersFromServer().subscribeOn(Schedulers.io())

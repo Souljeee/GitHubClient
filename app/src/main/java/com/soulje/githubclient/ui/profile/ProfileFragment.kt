@@ -10,6 +10,7 @@ import com.soulje.githubclient.Network.AndroidNetworkStatus
 import com.soulje.githubclient.Network.INetworkStatus
 import com.soulje.githubclient.R
 import com.soulje.githubclient.app.App
+import com.soulje.githubclient.app.app
 import com.soulje.githubclient.databinding.FragmentProfileBinding
 import com.soulje.githubclient.model.*
 import com.soulje.githubclient.model.db.Database
@@ -22,19 +23,28 @@ import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
+import javax.inject.Inject
+import javax.inject.Named
 
 
 class ProfileFragment : MvpAppCompatFragment(), ProfileView {
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
-    private val router : Router by inject()
-
-    private val retrofitRepo: IGitHubUsersRepo by inject(named("cache"))
+    @Inject
+    lateinit var router:Router
+    @Inject
+    @Named("memory")
+    lateinit var retrofitRepo: IGitHubUsersRepo
 
     private val presenter: ProfilePresenter by moxyPresenter { ProfilePresenter( retrofitRepo, router, AndroidScreens()) }
     private lateinit var userLogin:String
     private lateinit var adapter: ProfileAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        requireActivity().app.appComponent.inject(this)
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
