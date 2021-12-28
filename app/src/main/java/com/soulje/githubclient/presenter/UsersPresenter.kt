@@ -43,10 +43,10 @@ class UsersPresenter(val usersRepo: IGitHubUsersRepo, val router: Router, val sc
         }
     }
 
-    private fun loadData() {
+    fun loadData() {
         disposable = usersRepo
             .getUsers()
-            .observeOn(AndroidSchedulers.mainThread())
+//            .observeOn(AndroidSchedulers.mainThread())
             .subscribe ({ repos ->
                 usersListPresenter.users.clear()
                 usersListPresenter.users.addAll(repos)
