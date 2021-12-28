@@ -6,6 +6,8 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class UserRepository(
+    @SerializedName("node_id")
+    val id:String? = null,
     @SerializedName("name")
     val name:String? = null,
     @SerializedName("forks_count")
